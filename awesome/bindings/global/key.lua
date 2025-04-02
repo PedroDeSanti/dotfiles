@@ -18,14 +18,14 @@ awful.keyboard.append_global_keybindings({
         key         = "s",
         description = "show help",
         group       = "awesome",
-        on_press    =  hotkeys_popup.show_help,
+        on_press    = hotkeys_popup.show_help,
     },
     awful.key {
         modifiers   = { mod.super },
         key         = "w",
         description = "show main menu",
         group       = "awesome",
-        on_press    = function () widgets.mymainmenu:show() end,
+        on_press    = function () widgets.mainmenu:show() end,
     },
     awful.key {
         modifiers   = { mod.super, mod.ctrl },
@@ -49,7 +49,7 @@ awful.keyboard.append_global_keybindings({
         on_press    = function ()
             awful.prompt.run {
                 prompt       = "Run Lua code: ",
-                textbox      = awful.screen.focused().mypromptbox.widget,
+                textbox      = awful.screen.focused().promptbox.widget,
                 exe_callback = awful.util.eval,
                 history_path = awful.util.get_cache_dir() .. "/history_eval"
             }
@@ -67,7 +67,7 @@ awful.keyboard.append_global_keybindings({
         key         = "r",
         description = "run prompt",
         group       = "launcher",
-        on_press    = function () awful.screen.focused().mypromptbox:run() end,
+        on_press    = function () awful.screen.focused().promptbox:run() end,
     },
     awful.key {
         modifiers   = { mod.super },

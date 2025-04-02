@@ -9,9 +9,9 @@ local apps = require("config.apps")
 local mod = require("bindings.mod")
 
 
--- {{{ Menu
+-- Menu
 -- Create a launcher widget and a main menu
-_M.myawesomemenu = {
+_M.launcher = {
     { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
     { "manual", apps.manual_cmd },
     { "edit config", apps.editor_cmd .. " " .. awesome.conffile },
@@ -19,25 +19,25 @@ _M.myawesomemenu = {
     { "quit", function() awesome.quit() end },
  }
 
-_M.mymainmenu = awful.menu({
+_M.mainmenu = awful.menu({
     items = {
-        { "awesome", _M.myawesomemenu, beautiful.awesome_icon },
+        { "awesome", _M.launcher, beautiful.awesome_icon },
         { "open terminal", apps.terminal }
     }
 })
 
-_M.myawesomemenu = awful.widget.launcher({
+_M.launcher = awful.widget.launcher({
     image = beautiful.awesome_icon,
-    menu = _M.mymainmenu
+    menu = _M.mainmenu
 })
 
--- {{{ Wibar
+-- Wibar
 
 -- Keyboard map indicator and switcher
-_M.mykeyboardlayout = awful.widget.keyboardlayout()
+_M.keyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-_M.mytextclock = wibox.widget.textclock()
+_M.textclock = wibox.widget.textclock()
 
 -- Create a promptbox for each screen
 function _M.create_promptbox() return awful.widget.prompt() end
@@ -165,19 +165,19 @@ function _M.create_wibox(s)
             -- Left widgets
             {
                 layout = wibox.layout.fixed.horizontal,
-                _M.myawesomemenu,
-                s.mytaglist,
-                s.mypromptbox,
+                _M.launcher,
+                s.taglist,
+                s.promptbox,
             },
             -- Middle widget
-            s.mytasklist,
+            s.tasklist,
             -- Right widgets
             {
                 layout = wibox.layout.fixed.horizontal,
-                _M.mykeyboardlayout,
+                _M.keyboardlayout,
                 wibox.widget.systray(),
-                _M.mytextclock,
-                s.mylayoutbox,
+                _M.textclock,
+                s.layoutbox,
             },
         }
     }

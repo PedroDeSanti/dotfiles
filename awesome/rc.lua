@@ -6,7 +6,6 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
-require("awful.autofocus")
 -- Theme handling library
 local beautiful = require("beautiful")
 
@@ -15,6 +14,10 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- Gaps
 beautiful.useless_gap = 8
+
+require("bindings")
+require("rules")
+require("signals")
 
 awful.spawn.with_shell('kitty')
 awful.spawn.with_shell('picom')
