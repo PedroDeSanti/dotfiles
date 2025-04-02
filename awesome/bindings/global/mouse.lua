@@ -1,20 +1,21 @@
 local awful = require("awful")
 local widgets = require("widgets")
+local mouse = require("bindings.input.mouse")
 
 awful.mouse.append_global_mousebindings({
     awful.button{
         modifiers = { },
-        button    = 3,
+        button    = mouse.right_click,
         on_press  = function() widgets.mainmenu:toggle() end
     },
     -- awful.button{
     --     modifiers = { },
-    --     button    = 4,
+    --     button    = mouse.scroll_up,
     --     on_press  = awful.tag.viewprev
     -- },
     -- awful.button{
     --     modifiers = { },
-    --     button    = 5,
+    --     button    = mouse.scroll_down,
     --     on_press  = awful.tag.viewnext
     -- },
 })

@@ -6,8 +6,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local wibox = require("wibox")
 
 local apps = require("config.apps")
-local mod = require("bindings.mod")
-
+local mod = require("bindings.input.mod")
+local mouse = require("bindings.input.mouse")
 
 -- Menu
 -- Create a launcher widget and a main menu
@@ -44,31 +44,28 @@ function _M.create_promptbox() return awful.widget.prompt() end
 
 -- Create an imagebox widget which will contain an icon indicating which layout we're using.
 -- We need one layoutbox per screen.
-
--- todo: add abstraction for buttons
-
 function _M.create_layoutbox(s)
     return awful.widget.layoutbox {
         screen  = s,
         buttons = {
             awful.button {
                 modifiers = { },
-                button    = 1, -- left click
+                button    = mouse.left_click,
                 on_press  = function() awful.layout.inc(1) end,
             },
             awful.button {
                 modifiers = { },
-                button    = 3, -- right click
+                button    = mouse.right_click,
                 on_press  = function() awful.layout.inc(-1) end,
             },
             awful.button {
                 modifiers = { },
-                button    = 4, -- scroll up
+                button    = mouse.scroll_up,
                 on_press  = function() awful.layout.inc(-1) end,
             },
             awful.button {
                 modifiers = { },
-                button    = 5, -- scroll down
+                button    = mouse.scroll_down,
                 on_press  = function() awful.layout.inc(1) end,
             },
         }
@@ -83,12 +80,12 @@ function _M.create_taglist(s)
         buttons = {
             awful.button {
                 modifiers = { },
-                button    = 1, -- left click
+                button    = mouse.left_click,
                 on_press  = function(t) t:view_only() end,
             },
             awful.button {
-                modifiers = { mod.super }, -- super + left click
-                button    = 1,
+                modifiers = { mod.super },
+                button    = mouse.left_click,
                 on_press  = function(t)
                     if client.focus then
                         client.focus:move_to_tag(t)
@@ -97,12 +94,12 @@ function _M.create_taglist(s)
             },
             awful.button {
                 modifiers = { },
-                button    = 3, -- right click
+                button    = mouse.right_click,
                 on_press  = awful.tag.viewtoggle,
             },
             awful.button {
-                modifiers = { mod.super }, -- super + right click
-                button    = 3,
+                modifiers = { mod.super },
+                button    = mouse.right_click,
                 on_press  = function(t)
                     if client.focus then
                         client.focus:toggle_tag(t)
@@ -111,19 +108,19 @@ function _M.create_taglist(s)
             },
             awful.button {
                 modifiers = { },
-                button    = 4, -- scroll up
+                button    = mouse.scroll_up,
                 on_press  = function(t) awful.tag.viewprev(t.screen) end,
             },
             awful.button {
                 modifiers = { },
-                button    = 5, -- scroll down
+                button    = mouse.scroll_down,
                 on_press  = function(t) awful.tag.viewnext(t.screen) end,
             },
         }
     }
 end
 
--- Create a tasklist widget --santi
+-- Create a tasklist widget
 function _M.create_tasklist(s)
     return awful.widget.tasklist {
         screen  = s,
@@ -131,24 +128,24 @@ function _M.create_tasklist(s)
         buttons = {
             awful.button {
                 modifiers = { },
-                button    = 1, -- left click
+                button    = mouse.left_click,
                 on_press  = function (c)
                     c:activate { context = "tasklist", action = "toggle_minimization" }
                 end,
             },
             awful.button {
                 modifiers = { },
-                button    = 3, -- right click
+                button    = mouse.right_click,
                 on_press  = function() awful.menu.client_list { theme = { width = 250 } } end,
             },
             awful.button {
                 modifiers = { },
-                button    = 4, -- scroll up
+                button    = mouse.scroll_up,
                 on_press  = function() awful.client.focus.byidx(-1) end,
             },
             awful.button {
                 modifiers = { },
-                button    = 5, -- scroll down
+                button    = mouse.scroll_down,
                 on_press  = function() awful.client.focus.byidx(1) end,
             },
         }
