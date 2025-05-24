@@ -25,6 +25,7 @@ set -x CUBE_PATH /usr/local/STMicroelectronics/STM32Cube/STM32CubeMX
 set -x CUBE_CMD $CUBE_PATH/STM32CubeMX
 set -x CUBE_PROGRAMMER_PATH /usr/local/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
 set -x ANDROID_HOME $HOME/Android/Sdk # Flutter
+set -x XDG_CONFIG_HOME $HOME/.config
 
 # set EDITOR to code
 set -x EDITOR /usr/bin/code
@@ -124,17 +125,34 @@ function clone
     cd (basename "$argv" .git)
 end
 
+# Switch to a specific workspace
 function ws
     set workspace $argv[1]
-    set command $argv[2..-1]
 
-    # Run the ~/Scripts/workspace.sh script
-    ~/Scripts/workspace.sh $workspace
+    # Check if wmctrl is installed
+    if not command -v wmctrl > /dev/null
+        echo "Error: wmctrl is not installed. Please install it first."
+        return 1
+    end
+
+    # Check if exactly one argument is provided
+    if test -z $workspace
+        echo "Usage: ws <workspace_number> [command]"
+        return 1
+    end
+
+    # Check if the workspace number is valid
+    if not string match -q -r '^\d+$' $workspace
+        echo "Error: Invalid workspace number. Please provide a positive integer."
+        return 1
+    end
 
     # set primary monitor
     wmctrl -o 0,0
 
-    eval $command
+    # Switch to the desired workspace
+    wmctrl -s (math "$workspace - 1")
+    echo "Switched to workspace $workspace"
 end
 
 function remake
@@ -153,7 +171,7 @@ end
 
 
 # Function to wrap the current command line with launch_on_workspace 1
-function wrap_with_launch_on_workspace
+function _wrap_with_launch_on_workspace
     set workspace $argv[1]
 
     # Check if the current command line is empty
@@ -182,7 +200,7 @@ function wrap_with_launch_on_workspace
     set current_command (commandline)
 
     # # Wrap the command with launch_on_workspace 1
-    set new_command "ws $workspace \"$current_command\""
+    set new_command "ws $workspace && $current_command"
 
     # # Replace the current command line with the new command
     commandline -r $new_command
@@ -190,24 +208,24 @@ end
 
 function _unwrap
     set current_command (commandline)
-    set new_command (string match -r "ws [0-9]+ \"(.*)\"" $current_command)[2]
+    set new_command (string match -r "ws [0-9]+ && (.*)" $current_command)[2]
 
     commandline -r $new_command
 end
 
 
-# Bind Ctrl+1 to the wrap_with_launch_on_workspace function
+# Bind Ctrl+1 to the _wrap_with_launch_on_workspace function
 
-bind -k f1 "wrap_with_launch_on_workspace 1"
-bind -k f2 "wrap_with_launch_on_workspace 2"
-bind -k f3 "wrap_with_launch_on_workspace 3"
-bind -k f4 "wrap_with_launch_on_workspace 4"
-bind -k f5 "wrap_with_launch_on_workspace 5"
-bind -k f6 "wrap_with_launch_on_workspace 6"
-bind -k f7 "wrap_with_launch_on_workspace 7"
-bind -k f8 "wrap_with_launch_on_workspace 8"
-bind -k f9 "wrap_with_launch_on_workspace 9"
-bind -k f10 "wrap_with_launch_on_workspace 10"
+bind -k f1 "_wrap_with_launch_on_workspace 1"
+bind -k f2 "_wrap_with_launch_on_workspace 2"
+bind -k f3 "_wrap_with_launch_on_workspace 3"
+bind -k f4 "_wrap_with_launch_on_workspace 4"
+bind -k f5 "_wrap_with_launch_on_workspace 5"
+bind -k f6 "_wrap_with_launch_on_workspace 6"
+bind -k f7 "_wrap_with_launch_on_workspace 7"
+bind -k f8 "_wrap_with_launch_on_workspace 8"
+bind -k f9 "_wrap_with_launch_on_workspace 9"
+bind -k f10 "_wrap_with_launch_on_workspace 10"
 
 
 ###########
@@ -220,7 +238,7 @@ fundle plugin 'patrickf1/fzf.fish'
 fundle plugin 'jorgebucaran/autopair.fish'
 fundle plugin 'nickeb96/puffer-fish'
 fundle plugin 'edc/bass'
-fundle plugin 'kenji-miyake/auto-source-setup-bash.fish'
+# fundle plugin 'kenji-miyake/auto-source-setup-bash.fish'
 fundle plugin 'lig/fish-gitmoji' --url 'https://codeberg.org/lig/fish-gitmoji.git'
 
 fundle init
@@ -237,4 +255,4 @@ fzf_configure_bindings --directory=\e\cF --variables=\e\cv
 # asdf elixir/erlang version manager
 source ~/.asdf/asdf.fish
 
-bass source /opt/ros/humble/setup.bash
+# bass source /opt/ros/humble/setup.bash
