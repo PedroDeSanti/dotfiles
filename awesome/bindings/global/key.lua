@@ -76,6 +76,22 @@ awful.keyboard.append_global_keybindings({
         group       = "launcher",
         on_press    = function() menubar.show() end,
     },
+    awful.key {
+        modifiers   = { mod.super, mod.shift },
+        key         = "l",
+        description = "lock screen",
+        group       = "launcher",
+        on_press    = function() lock_screen_show() end,
+    },
+    awful.key {
+        modifiers   = { mod.super },
+        key         = "Escape",
+        description = "exit screen",
+        group       = "launcher",
+        on_press    = function()
+            awesome.emit_signal("module::exit_screen:show")
+        end,
+    },
 })
 
 
@@ -239,13 +255,13 @@ awful.keyboard.append_global_keybindings({
         group       = "layout",
         on_press    = function () awful.tag.incnmaster(1, nil, true) end,
     },
-    awful.key {
-        modifiers   = { mod.super, mod.shift },
-        key         = "l",
-        description = "decrease the number of master clients",
-        group       = "layout",
-        on_press    = function () awful.tag.incnmaster(-1, nil, true) end,
-    },
+    -- awful.key {
+    --     modifiers   = { mod.super, mod.shift },
+    --     key         = "l",
+    --     description = "decrease the number of master clients",
+    --     group       = "layout",
+    --     on_press    = function () awful.tag.incnmaster(-1, nil, true) end,
+    -- },
     awful.key {
         modifiers   = { mod.super, mod.ctrl },
         key         = "h",
