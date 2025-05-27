@@ -65,9 +65,16 @@ awful.keyboard.append_global_keybindings({
     awful.key {
         modifiers   = { mod.super },
         key         = "r",
-        description = "run prompt",
+        description = "open rofi launcher",
         group       = "launcher",
-        on_press    = function () awful.screen.focused().promptbox:run() end,
+        on_press    = function () awful.spawn.with_shell(apps.app_launcher) end,
+    },
+    awful.key {
+        modifiers   = { mod.super, mod.shift },
+        key         = "r",
+        description = "open rofi window switcher",
+        group       = "launcher",
+        on_press    = function () awful.spawn.with_shell(apps.window_switcher) end,
     },
     awful.key {
         modifiers   = { mod.super },
@@ -100,7 +107,12 @@ awful.keyboard.append_global_keybindings({
         key         = "Tab",
         description = "go back",
         group       = "tag",
-        on_press    = awful.tag.history.restore,
+        on_press    = function ()
+            awful.tag.history.restore()
+            if client.focus then
+                client.focus:raise()
+            end
+        end
     },
     awful.key {
         modifiers   = { mod.super, mod.shift },
