@@ -21,9 +21,9 @@ end
 #########################
 
 set -x ARM_GCC_PATH /opt/arm-none-eabi/gcc-arm-none-eabi-10.3-2021.10/bin
-set -x CUBE_PATH /usr/local/STMicroelectronics/STM32Cube/STM32CubeMX
+set -x CUBE_PATH $HOME/STMicroelectronics/STM32Cube/STM32CubeMX
 set -x CUBE_CMD $CUBE_PATH/STM32CubeMX
-set -x CUBE_PROGRAMMER_PATH /usr/local/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
+set -x CUBE_PROGRAMMER_PATH $HOME/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
 set -x ANDROID_HOME $HOME/Android/Sdk # Flutter
 set -x XDG_CONFIG_HOME $HOME/.config
 
@@ -64,7 +64,7 @@ abbr push 'git push'
 abbr stash 'git stash'
 abbr clean-branches 'git fetch -p && git branch --merged | grep -v \* | xargs git branch -D'
 
-abbr gazebo 'ign gazebo'
+# abbr gazebo 'ign gazebo'
 
 abbr clr 'clear'
 
@@ -74,7 +74,7 @@ abbr cmake.. 'cmake ..'
 
 abbr logout 'sudo pkill -u $USER'
 
-abbr ls 'exa --icons --color=always'
+alias ls 'eza --icons --color=always'
 
 abbr cd.. 'cd ..'
 
@@ -247,12 +247,13 @@ fundle init
 # Keybindings #
 ###############
 
-fzf_configure_bindings --directory=\e\cF --variables=\e\cv
+fzf_configure_bindings --variables=\e\cv
 # fzf_configure_bindings --directory=\cf --variables=\e\cv
 
 # bind \cF "--type=overlay --stdin-source=@screen_scrollback /usr/local/bin/fzf --no-sort --no-mouse --exact -i"
 
 # asdf elixir/erlang version manager
-source ~/.asdf/asdf.fish
+# source ~/.asdf/asdf.fish
 
 # bass source /opt/ros/humble/setup.bash
+bass source /opt/ros/jazzy/setup.bash
