@@ -58,4 +58,11 @@ ruled.client.connect_signal("request::rules", function()
         rule       = { class = "zen"     },
         properties = { screen = 1, tag = "2" }
     }
+
+    -- If it is a dialog, place it in the center of the screen.
+    ruled.client.append_rule {
+        id         = "centered_dialogs",
+        rule_any   = { type = { "dialog" } },
+        properties = { placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen }
+    }
 end)
