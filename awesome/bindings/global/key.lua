@@ -11,6 +11,16 @@ local gmath = require("gears.math")
 
 menubar.utils.terminal = apps.terminal
 
+local naughty = require("naughty")
+local function show_message(message)
+	naughty.notify({
+		preset = naughty.config.presets.normal,
+		title = "Brightness Widget",
+		text = message,
+	})
+end
+
+
 -- General Awesome keys
 awful.keyboard.append_global_keybindings({
     awful.key {
@@ -71,7 +81,7 @@ awful.keyboard.append_global_keybindings({
     },
     awful.key {
         modifiers   = { mod.super, mod.shift },
-        key         = "r",
+        key         = "Tab",
         description = "open rofi window switcher",
         group       = "launcher",
         on_press    = function () awful.spawn.with_shell(apps.window_switcher) end,
@@ -82,6 +92,72 @@ awful.keyboard.append_global_keybindings({
         description = "show the menubar",
         group       = "launcher",
         on_press    = function() menubar.show() end,
+    },
+    awful.key {
+        modifiers   = { mod.super, mod.shift },
+        key         = "s",
+        description = "take a screenshot",
+        group       = "launcher",
+        on_press    = function () awful.spawn.with_shell(apps.screenshot) end,
+    },
+    -- Volume control
+    awful.key {
+        modifiers   = { },
+        key         = "XF86AudioRaiseVolume",
+        description = "increase volume",
+        group       = "media",
+        on_press    = function () awful.spawn.with_shell(apps.volume.up) end,
+    },
+    awful.key {
+        modifiers   = { },
+        key         = "XF86AudioLowerVolume",
+        description = "decrease volume",
+        group       = "media",
+        on_press    = function () awful.spawn.with_shell(apps.volume.down) end,
+    },
+    awful.key {
+        modifiers   = { },
+        key         = "XF86AudioMute",
+        description = "mute volume",
+        group       = "media",
+        on_press    = function () awful.spawn.with_shell(apps.volume.mute) end,
+    },
+    -- Brightness control
+    awful.key {
+        modifiers   = { },
+        key         = "XF86MonBrightnessDown",
+        description = "decrease brightness",
+        group       = "media",
+        on_press    = function () awful.spawn.with_shell(apps.brightness.down) end,
+    },
+    awful.key {
+        modifiers   = { },
+        key         = "XF86MonBrightnessUp",
+        description = "increase brightness",
+        group       = "media",
+        on_press    = function () awful.spawn.with_shell(apps.brightness.up) end,
+    },
+    -- Media control
+    awful.key {
+        modifiers   = { },
+        key         = "XF86AudioPlay",
+        description = "play/pause media",
+        group       = "media",
+        on_press    = function () awful.spawn.with_shell(apps.media.play_pause) end,
+    },
+    awful.key {
+        modifiers   = { },
+        key         = "XF86AudioNext",
+        description = "next media track",
+        group       = "media",
+        on_press    = function () awful.spawn.with_shell(apps.media.next) end,
+    },
+    awful.key {
+        modifiers   = { },
+        key         = "XF86AudioPrev",
+        description = "previous media track",
+        group       = "media",
+        on_press    = function () awful.spawn.with_shell(apps.media.previous) end,
     },
 })
 
