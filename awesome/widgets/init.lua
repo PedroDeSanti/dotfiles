@@ -9,6 +9,9 @@ local apps = require("config.apps")
 local mod = require("bindings.input.mod")
 local mouse = require("bindings.input.mouse")
 
+-- Import topbar
+local topbar = require("widgets.topbar.topbar")
+
 -- Menu
 -- Create a launcher widget and a main menu
 _M.launcher = {
@@ -152,7 +155,7 @@ function _M.create_tasklist(s)
     }
 end
 
--- Create the wibox
+-- Create the wibox (original)
 function _M.create_wibox(s)
     return awful.wibar {
         position = "top",
@@ -178,6 +181,11 @@ function _M.create_wibox(s)
             },
         }
     }
+end
+
+-- Create the fancy topbar (new from Awful-DOTS)
+function _M.create_topbar(s)
+    return topbar.create_topbar(s)
 end
 
 return _M
