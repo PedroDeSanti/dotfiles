@@ -19,7 +19,7 @@ local fancy_taglist = require("widgets.topbar.fancy_taglist")
 
 -- Text clock widget
 local mytextclock = wibox.widget.textclock(
-    '<span color="' .. color.white .. '" font="Ubuntu Nerd Font Bold 13"> %a %b %d, %H:%M </span>', 10)
+    '<span color="' .. color.white .. '" font="Ubuntu Nerd Font 12"> %a %b %d, %H:%M </span>', 10)
 
 function _M.create_topbar(s)
     -- Create taglist for this screen
@@ -37,10 +37,10 @@ function _M.create_topbar(s)
             else
                 c:emit_signal("request::activate", "tasklist", {raise = true})
             end
-        end),
-        awful.button({ }, 3, function()
-            awful.menu.client_list({ theme = { width = 250 } })
         end)
+        -- awful.button({ }, 3, function()
+        --     awful.menu.client_list({ theme = { width = 250 } })
+        -- end)
     )
 
     -- Create fancy taglist

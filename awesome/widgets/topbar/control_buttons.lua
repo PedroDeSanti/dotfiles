@@ -5,6 +5,9 @@ local wibox = require("wibox")
 local color = require("widgets.topbar.colors")
 local dpi = beautiful.xresources.apply_dpi
 
+-- Import control center
+local control_center = require("widgets.control_center.main")
+
 local separator = wibox.widget.textbox("   ")
 
 local create_button = function(icon)
@@ -46,8 +49,8 @@ screenshot:connect_signal("button::press", function(_, _, _, button)
 end)
 
 settings:connect_signal("button::release", function()
-    -- You can add settings panel functionality here
-    awful.spawn("gnome-control-center")
+    -- Toggle control center
+    control_center:toggle()
 end)
 
 music:connect_signal("button::release", function()
