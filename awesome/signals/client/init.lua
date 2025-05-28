@@ -59,3 +59,9 @@ end)
 client.connect_signal("mouse::enter", function(c)
     c:activate { context = "mouse_enter", raise = false }
 end)
+
+client.connect_signal("request::manage", function(client, context)
+    if client.floating and context == "new" then
+        client.placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen
+    end
+end)

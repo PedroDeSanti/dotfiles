@@ -32,5 +32,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
     s.layoutbox = widgets.create_layoutbox(s)
     s.taglist   = widgets.create_taglist(s)
     s.tasklist  = widgets.create_tasklist(s)
-    s.wibox     = widgets.create_wibox(s)
+
+    -- Use the new fancy topbar instead of the old wibox
+    s.wibox     = widgets.create_topbar(s)
+    -- If you want to go back to the original, uncomment the line below and comment the one above
+    -- s.wibox     = widgets.create_wibox(s)
 end)
