@@ -7,6 +7,9 @@ local apps = require("config.apps")
 local mod = require("bindings.input.mod")
 local widgets = require("widgets")
 
+-- Import control center for keybinding
+local control_center = require("widgets.control_center.main")
+
 local gmath = require("gears.math")
 
 menubar.utils.terminal = apps.terminal
@@ -431,6 +434,19 @@ awful.keyboard.append_global_keybindings({
             if t then
                 t.layout = t.layouts[index] or t.layout
             end
+        end,
+    },
+})
+
+-- Keybinding to toggle the control center
+awful.keyboard.append_global_keybindings({
+    awful.key {
+        modifiers   = { mod.super },
+        key         = "Escape",
+        description = "toggle control center",
+        group       = "awesome",
+        on_press    = function ()
+            control_center:toggle()
         end,
     },
 })
