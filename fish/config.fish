@@ -51,7 +51,7 @@ abbr config-fish        '$EDITOR ~/.config/fish/config.fish'
 abbr config-starship    '$EDITOR ~/.config/starship.toml'
 abbr config-kitty       '$EDITOR ~/.config/kitty/kitty.conf'
 abbr config-ranger      '$EDITOR ~/.config/ranger/rc.conf'
-abbr config-awesome     '$EDITOR ~/.config/awesome/rc.lua'
+abbr config-awesome     '$EDITOR ~/.config/awesome'
 abbr config-picom       '$EDITOR ~/.config/picom/picom.conf'
 
 abbr my-ip "hostname -I | awk '{print \$1}'"
