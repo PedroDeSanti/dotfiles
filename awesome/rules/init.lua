@@ -40,6 +40,7 @@ ruled.client.connect_signal("request::rules", function()
                 "AlarmWindow",    -- Thunderbird's calendar.
                 "ConfigManager",  -- Thunderbird's about:config.
                 "pop-up",         -- e.g. Google Chrome's (detached) Developer Tools.
+                "Popup",
             }
         },
         properties = { floating = true }
@@ -53,8 +54,8 @@ ruled.client.connect_signal("request::rules", function()
     }
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- ruled.client.append_rule {
-    --     rule       = { class = "Firefox"     },
-    --     properties = { screen = 1, tag = "2" }
-    -- }
+    ruled.client.append_rule {
+        rule       = { class = "zen"     },
+        properties = { screen = 1, tag = "2" }
+    }
 end)
