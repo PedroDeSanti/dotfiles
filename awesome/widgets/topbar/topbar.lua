@@ -16,10 +16,13 @@ local awesome_logo = require("widgets.topbar.awesome_logo")
 local systray_widget = require("widgets.topbar.systray")
 local control_buttons = require("widgets.topbar.control_buttons")
 local fancy_taglist = require("widgets.topbar.fancy_taglist")
+local battery_widget = require("widgets.topbar.battery")
 
 -- Text clock widget
 local mytextclock = wibox.widget.textclock(
-    '<span color="' .. color.white .. '" font="Ubuntu Nerd Font 12"> %a %b %d, %H:%M </span>', 10)
+    '<span color="' .. color.white .. '" font="Ubuntu Nerd Font Bold 13"> %a %b %d, %H:%M </span>', 10)
+
+-- Create battery widget instance (moved to inside the function to match Awful-DOTS structure)
 
 function _M.create_topbar(s)
     -- Create taglist for this screen
@@ -103,6 +106,14 @@ function _M.create_topbar(s)
                     systray_widget,
                     separator,
                     control_buttons,
+                    separator,
+                    battery_widget({
+                        show_current_level = true,
+                        arc_thickness = 3,
+                        size = 26,
+                        font = "CaskaydiaCove Nerd Font 10",
+                        timeout = 10,
+                    }),
                     separator,
                 },
             },
