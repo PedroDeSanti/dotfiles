@@ -81,6 +81,13 @@ function _M.create_topbar(s)
         opacity = 1,
         fg = color.blueish_white,
         bg = "#00000000",
+        type = "dock",  -- Set as dock type for better X11 positioning
+    })
+    
+    -- Set struts to inform X11 about reserved space
+    -- This helps system tray applications position their popups correctly
+    mywibox:struts({
+        top = dpi(35)
     })
 
     -- Setup the wibar
