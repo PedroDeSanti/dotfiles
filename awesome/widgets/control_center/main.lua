@@ -37,7 +37,8 @@ local control = awful.popup {
 	shape = function(cr, width, height)
 		gears.shape.rounded_rect(cr, width, height, 0)
 	end,
-	opacity = 1
+	opacity = 1,
+	hide_on_right_click = false,
 }
 
 control:setup {
@@ -104,12 +105,61 @@ control:setup {
 	shape = function(cr, width, height)
 		gears.shape.rounded_rect(cr, width, height, 10)
 	end,
+	-- No buttons here - we'll handle it differently
 }
 
 -- Signal to hide control center
 awesome.connect_signal("widget::control", function()
 	control.visible = false
 end)
+
+-- Robust auto-close using client-focused events and key bindings
+local function setup_auto_close()
+	-- Method 1: Close when clicking on any client (application window)
+	client.connect_signal("button::press", function(c, x, y, button, mods, find_widgets_result)
+		if control.visible then
+			control.visible = false
+		end
+	end)
+	
+	-- Method 2: Close when any client gets focus
+	client.connect_signal("focus", function(c)
+		if control.visible then
+			control.visible = false
+		end
+	end)
+	
+	-- Method 3: Close when user presses Escape (already implemented in key bindings)
+	-- Method 4: Close when switching workspace/tag
+	tag.connect_signal("property::selected", function()
+		if control.visible then
+			control.visible = false
+		end
+	end)
+
+	-- Method 5: Close when any new window/application is launched
+	client.connect_signal("manage", function()
+		if control.visible then
+			control.visible = false
+		end
+	end)
+	
+	-- Method 6: Close when desktop/root window is clicked
+	-- Using a more compatible approach
+	awesome.connect_signal("startup", function()
+		root.buttons(gears.table.join(
+			root.buttons(),
+			awful.button({ }, 1, function()
+				if control.visible then
+					control.visible = false
+				end
+			end)
+		))
+	end)
+end
+
+-- Initialize auto-close functionality
+setup_auto_close()
 
 -- Function to toggle control center visibility
 function control:toggle()

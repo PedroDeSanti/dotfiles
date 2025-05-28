@@ -449,4 +449,16 @@ awful.keyboard.append_global_keybindings({
             control_center:toggle()
         end,
     },
+    -- Close control center with Escape key when it's visible
+    awful.key {
+        modifiers   = { },
+        key         = "Escape",
+        description = "close control center",
+        group       = "awesome",
+        on_press    = function ()
+            if control_center.visible then
+                control_center:hide()
+            end
+        end,
+    },
 })
